@@ -1,6 +1,14 @@
 package com.example.backend.user;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+//User is a reserved name
+@Table(name="users")
 public class User {
+	@Id
 	private Long id;
 	private	String firstName;
 	private String lastName;
@@ -68,4 +76,4 @@ public class User {
 	}
 //--Utils--
 
-}
+};
