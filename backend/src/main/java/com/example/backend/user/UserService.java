@@ -19,4 +19,7 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	void	createNewUser(User user){
+		userRepository.save(user);
+	}
 }
