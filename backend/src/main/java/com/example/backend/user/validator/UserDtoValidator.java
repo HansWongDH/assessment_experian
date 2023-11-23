@@ -1,9 +1,12 @@
-package com.example.backend.validator;
+package com.example.backend.user.validator;
 
+
+import org.springframework.stereotype.Component;
 
 import com.example.backend.exception.ValidationException;
 import com.example.backend.user.dto.UserDto;
 
+@Component
 public class UserDtoValidator implements IValidator<UserDto>{
 	private final EmailValidator emailValidator;
 

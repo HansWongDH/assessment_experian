@@ -11,7 +11,7 @@ import com.example.backend.exception.UserIdNotFoundException;
 import com.example.backend.user.UserRepository;
 import com.example.backend.user.dto.UserDto;
 import com.example.backend.user.entity.User;
-import com.example.backend.validator.IValidator;
+import com.example.backend.user.validator.IValidator;
 
 @Service
 public class UserService {

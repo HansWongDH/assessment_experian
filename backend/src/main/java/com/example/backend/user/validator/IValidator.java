@@ -1,4 +1,4 @@
-package com.example.backend.validator;
+package com.example.backend.user.validator;
 
 import com.example.backend.exception.ValidationException;
 
