@@ -20,8 +20,8 @@ public class GlobalExceptionHandler   {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
 	}
 
-	@ExceptionHandler({UserIdNotFoundException.class})
-	public ResponseEntity<Object> handleUserIdNotFoundException(UserIdNotFoundException exception)
+	@ExceptionHandler({EntryNotFoundException.class})
+	public ResponseEntity<Object> handleEntryNotFoundException(EntryNotFoundException exception)
 	{
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 	}
