@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.user.dto.UserUpdateDto;
+import com.example.backend.user.dto.UserDto;
+import com.example.backend.user.entity.User;
+import com.example.backend.user.service.UserService;
 
 @RestController
 @RequestMapping(path= "api/v1/user")
@@ -38,9 +40,9 @@ public class UserController {
 
 	@PutMapping(path = "{UserId}")
 	public void	updateUser(@PathVariable("UserId") long id,
-	 @RequestBody() UserUpdateDto userUpdateDto)
+	 @RequestBody() UserDto userDto)
 	{
-		userService.updateUser(id, userUpdateDto);
+		userService.updateUser(id, userDto);
 	}
 
 	@PostMapping
