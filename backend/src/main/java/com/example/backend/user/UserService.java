@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.backend.exception.EmailTakenException;
 import com.example.backend.exception.UserIdNotFoundException;
+import com.example.backend.user.dto.UserUpdateDto;
 
 @Service
 public class UserService {
@@ -21,6 +22,23 @@ public class UserService {
 
 	List<User> getAllUser(){
 		return userRepository.findAll();
+	}
+
+	void updateUser(Long id, UserUpdateDto userUpdateDto)
+	{
+		Optional<User> UserById = userRepository.findByIDOptional(id);
+		if(!UserById.isPresent())
+		{
+			throw new UserIdNotFoundException(id);
+		}
+		User user = UserById.get();
+		if (userUpdateDto.stringValidation(userUpdateDto.email))
+			user.setEmail(userUpdateDto.email);
+		if (userUpdateDto.stringValidation(userUpdateDto.firstName))
+			user.setFirstName(userUpdateDto.firstName);
+		if (userUpdateDto.stringValidation(userUpdateDto.lastName))
+			user.setLastName(userUpdateDto.lastName);
+		userRepository.save(user);
 	}
 
 	void	createNewUser(User user){
@@ -38,4 +56,5 @@ public class UserService {
 		}
 		userRepository.deleteById(id);
 	}
+
 }

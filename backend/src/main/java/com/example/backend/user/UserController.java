@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.backend.user.dto.UserUpdateDto;
 
 @RestController
 @RequestMapping(path= "api/v1/user")
@@ -22,10 +25,22 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	/**
+	 * find all user exist in database and return it
+	 * @return
+	 */
 	@GetMapping
 	public List<User> getAllUser() 
 	{
 		return userService.getAllUser();
+	}
+
+
+	@PutMapping(path = "{UserId}")
+	public void	updateUser(@PathVariable("UserId") long id,
+	 @RequestBody() UserUpdateDto userUpdateDto)
+	{
+		userService.updateUser(id, userUpdateDto);
 	}
 
 	@PostMapping
@@ -43,4 +58,5 @@ public class UserController {
 	{
 		userService.deleteUser(id);
 	}
+
 }
