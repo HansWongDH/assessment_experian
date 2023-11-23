@@ -11,4 +11,10 @@ public class GlobalExceptionHandler   {
 	{
 		return ResponseEntity.status(500).body(exception.getMessage());
 	}
+
+	@ExceptionHandler({UserIdNotFoundException.class})
+	public ResponseEntity<Object> handleUserIdNotFoundException(UserIdNotFoundException exception)
+	{
+		return ResponseEntity.status(500).body(exception.getMessage());
+	}
 }

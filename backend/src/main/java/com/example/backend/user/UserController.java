@@ -3,7 +3,9 @@ package com.example.backend.user;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +32,15 @@ public class UserController {
 	public void	createUser(@RequestBody User user)
 	{
 		userService.createNewUser(user);
+	}
+	
+	/**
+	 * delete user that matches the id
+	 * eg: api/v1/user/2 will delete user with id 2
+	 */
+	@DeleteMapping(path = "{UserId}")
+	public void deleteUser(@PathVariable("UserId") Long id)
+	{
+		userService.deleteUser(id);
 	}
 }

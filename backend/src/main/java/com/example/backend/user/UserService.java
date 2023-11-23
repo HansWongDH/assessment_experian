@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.exception.EmailTakenException;
+import com.example.backend.exception.UserIdNotFoundException;
 
 @Service
 public class UserService {
@@ -23,9 +24,18 @@ public class UserService {
 	}
 
 	void	createNewUser(User user){
-		Optional<User> userEmail = userRepository.findByEmail(user.getEmail());
-		if (userEmail.isPresent())
+		Optional<User> userByEmail = userRepository.findByEmailOptional(user.getEmail());
+		if (userByEmail.isPresent())
 			throw new EmailTakenException(user.getEmail());
 		userRepository.save(user);
+	}
+
+	void	deleteUser(Long id){
+		Optional<User> UserById = userRepository.findByIDOptional(id);
+		if (!UserById.isPresent())
+		{
+			throw new UserIdNotFoundException(id);
+		}
+		userRepository.deleteById(id);
 	}
 }
