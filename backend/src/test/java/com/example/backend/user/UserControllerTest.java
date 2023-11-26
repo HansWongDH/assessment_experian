@@ -75,12 +75,12 @@ class	UserControllerTest {
 
     @Test
     void testCreateUser() {
-        UserDto userDto = new UserDto(null, "test", "test", "test");
+        User user = new User("test", "test", "test@gmail.com");
 
 
-        userController.createUser(userDto);
+        userController.createUser(user);
 
-        verify(userService).createNewUser(eq(userDto));
+        verify(userService).createNewUser(eq(user));
     }
 
     @Test
