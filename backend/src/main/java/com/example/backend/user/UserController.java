@@ -3,6 +3,7 @@ package com.example.backend.user;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,15 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.user.dto.UserDto;
 import com.example.backend.user.entity.User;
-import com.example.backend.user.service.UserServiceImpl;
+import com.example.backend.user.service.UserService;
+
 
 @RestController
 @RequestMapping(path= "api/v1/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
-	private final UserServiceImpl userService;
+	private final UserService userService;
 
 	@Autowired
-	public UserController(UserServiceImpl userService)
+	public UserController(UserService userService)
 	{
 		this.userService = userService;
 	}
