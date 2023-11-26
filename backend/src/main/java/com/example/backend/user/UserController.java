@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.user.dto.UserDto;
 import com.example.backend.user.entity.User;
 import com.example.backend.user.service.UserService;
+import com.example.backend.user.validator.IValidator;
 
 
 @RestController
@@ -23,11 +24,13 @@ import com.example.backend.user.service.UserService;
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 	private final UserService userService;
+	private final IValidator<UserDto> userDtoValidator;
 
 	@Autowired
-	public UserController(UserService userService)
+	public UserController(UserService userService, IValidator<UserDto> userDtoValidator)
 	{
 		this.userService = userService;
+		this.userDtoValidator = userDtoValidator;
 	}
 
 	@GetMapping(path = "/email/{email}")
@@ -54,13 +57,15 @@ public class UserController {
 	public void	updateUser(@PathVariable("UserId") Long id,
 	 @RequestBody() UserDto userDto)
 	{
+		userDtoValidator.validate(userDto);
 		userService.updateUser(id, userDto);
 	}
 
 	@PostMapping
-	public void	createUser(@RequestBody User user)
+	public void	createUser(@RequestBody() UserDto userDto)
 	{
-		userService.createNewUser(user);
+		userDtoValidator.validate(userDto);
+		userService.createNewUser(userDto);
 	}
 	
 	/**

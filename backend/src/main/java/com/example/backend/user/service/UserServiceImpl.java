@@ -16,13 +16,13 @@ import com.example.backend.user.validator.IValidator;
 @Service
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
-	private final IValidator<UserDto> userDtoValidator;
+	private final IValidator<User> userValidator;
 
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository, IValidator<UserDto> userDtoValidator)
+	public UserServiceImpl(UserRepository userRepository, IValidator<User> userValidator)
 	{
 		this.userRepository = userRepository;
-		this.userDtoValidator = userDtoValidator;
+		this.userValidator = userValidator;
 	}
 
 	@Override
@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService {
 	public void updateUser(Long id, UserDto userDto)
 	{
 		
-		userDtoValidator.validate(userDto);
 		Optional<User> UserById = userRepository.findByIDOptional(id);
 		if(!UserById.isPresent())
 		{
@@ -69,14 +68,17 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(userDto.email);
 		user.setFirstName(userDto.firstName);
 		user.setLastName(userDto.lastName);
+		userValidator.validate(user);
 		userRepository.save(user);
 	}
 
 	@Override
-	public void	createNewUser(User user){
-		Optional<User> userByEmail = userRepository.findByEmailOptional(user.getEmail());
+	public void	createNewUser(UserDto userDto){
+		Optional<User> userByEmail = userRepository.findByEmailOptional(userDto.email);
 		if (userByEmail.isPresent())
-			throw new EmailTakenException(user.getEmail());
+			throw new EmailTakenException(userDto.email);
+		User user = new User(userDto.firstName, userDto.lastName, userDto.email);
+		userValidator.validate(user);
 		userRepository.save(user);
 	}
 
