@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 
 
@@ -9,7 +10,9 @@ const UserForm = ({ user, onClose, onSave, isEdit }) => {
 	  firstName: '',
 	  lastName: '',
 	});
+	const [errorMessage, setErrorMessage] = useState('');
   
+	const { enqueueSnackbar } = useSnackbar();
 	useEffect(() => {
 	  // If in edit mode, populate the form with existing user data
 	  if (isEdit && user) {
@@ -32,11 +35,13 @@ const UserForm = ({ user, onClose, onSave, isEdit }) => {
 		let valid = true;
 		if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
 		  valid = false;
+		  setErrorMessage("Invalid email format.")
 		}
 	
 		['firstName', 'lastName'].forEach((field) => {
 		  if (formData[field].trim() === '' || formData[field].length > 25) {
 			valid = false;
+			setErrorMessage(field + (formData[field].length > 25 ? " is too long" : " cannot be blanked"));
 		  }
 		});
 	
@@ -47,10 +52,13 @@ const UserForm = ({ user, onClose, onSave, isEdit }) => {
 	if (validateForm())
 	{
 		onSave(formData);
+		enqueueSnackbar("Success!", { variant: 'success' });
+
 	}
 	else
 	{
 		console.log("error invalid form");
+		enqueueSnackbar(errorMessage, { variant: 'error' });
 	}
 
 	  onClose();

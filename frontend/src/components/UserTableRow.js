@@ -4,11 +4,12 @@ import { useState } from 'react';
 import ConfirmationPrompt from '../libs/utils/confirmationPrompt';
 import UserForm from './UserForm';
 import { updateUser } from '../libs/UsersApi/PutApi';
+import { useSnackbar } from 'notistack';
 
 const UserTableRow = ({ user, refreshHandler }) => {
 	const [isConfirmationOpen, setConfirmationOpen] = useState(false);
 	const [isFormOpen, setFormOpen] = useState(false);
-
+	const { enqueueSnackbar } = useSnackbar();
 
 	//Delete function
 	const handleDeleteClick = (e) => {
@@ -17,14 +18,15 @@ const UserTableRow = ({ user, refreshHandler }) => {
 	  };
 
 	const handleConfirmDelete = () => {
-		
 		try
 		{
 			deleteUser(user.id);
+			enqueueSnackbar(`user ${user.id} deleted uccessfully`, {variant: 'success'});
 		}
 		catch(error)
 		{
 			console.log(error);
+			enqueueSnackbar(`Failed to delete user ${user.id}`, {variant: 'error'});
 		}
 		refreshHandler();
 		setConfirmationOpen(false);
@@ -45,9 +47,11 @@ const UserTableRow = ({ user, refreshHandler }) => {
 	  const handleSaveEditForm = (editedUser) => {
 		try{
 			updateUser(editedUser.id, editedUser)
+			enqueueSnackbar(`user ${user.id} updated uccessfully` , {variant: 'success'});
 		}
 		catch(error){
 			console.log(error);
+			enqueueSnackbar(`Failed to update user ${user.id}`, {variant: 'error'});
 		}
 		refreshHandler();
 		setFormOpen(false);

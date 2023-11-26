@@ -2,25 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { getAllUsers } from '../libs/UsersApi/GetApi';
 import UserTableRow from './UserTableRow';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
     const [page, setPage] = useState(0);
     const [refresh, setRefresh] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-  
+    const { enqueueSnackbar } = useSnackbar();
     useEffect(() => {
         const fetchData = async () => {
             try {
               const response = await getAllUsers();
               setUsers(response.data);
+              enqueueSnackbar("Successfully fetched all user data", {variant: 'success'});
             } catch (error) {
-              console.error('Error fetching users:', error);
+              console.error('Failed to fetch users:', error);
+              enqueueSnackbar("Failed to fetch users data", {variant: 'error'});
             }
           };
         
         fetchData();
-    }, [refresh]);
+    }, [refresh, enqueueSnackbar]);
   
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
