@@ -62,9 +62,9 @@ public class UserServiceImpl implements UserService {
 		{
 			throw new EntryNotFoundException(id);
 		}
-		User user = UserById.get();
+		User user = UserById.get();;
 		Optional<User> userByEmail = userRepository.findByEmailOptional(userDto.email);
-		if (userByEmail.isPresent())
+		if (userByEmail.isPresent() && !user.getEmail().equals(userDto.email))
 			throw new EmailTakenException(userDto.email);
 		user.setEmail(userDto.email);
 		user.setFirstName(userDto.firstName);

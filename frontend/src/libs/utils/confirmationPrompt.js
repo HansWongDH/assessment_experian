@@ -1,11 +1,5 @@
-import {
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	Button,
-  } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+
   
   const ConfirmationPrompt = ({ open, onClose, onConfirm, message }) => {
 	return (

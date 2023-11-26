@@ -1,5 +1,5 @@
 import axios from "axios";
 
-export function createUser(user) {
-    return axios.post('/api/v1/user', user);
+export async function createUser(user) {
+    return await axios.post('http://localhost:8080/api/v1/user', user);
 }
