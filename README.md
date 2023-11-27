@@ -17,12 +17,3 @@
     ```bash
     docker-compose up
     ```
-
-### Running Frontend
-
-1. Navigate to the "frontend" directory.
-2. Run the following command:
-
-    ```
-    yarn start dev
-    ```
