@@ -8,16 +8,20 @@ services:
      - POSTGRES_DB=${POSTGRES_DB}
      - POSTGRES_USER=${POSTGRES_USER}
      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-   ports:
-     - "5432:5432"
+   expose:
+     - "5432"
+   networks:
+     - experian
  backend:
    container_name: backend
    build: ./backend
    restart: on-failure
    depends_on:
      - postgres
-   ports:
-     - "8080:8080"
+   expose:
+     - "8080"
+   networks:
+     - experian
  frontend:
    container_name: frontend
    build: ./frontend
@@ -25,3 +29,10 @@ services:
      - backend
    ports:
      - "3000:3000"
+   networks:
+     - experian
+
+
+networks:
+    experian:
+        driver: bridge

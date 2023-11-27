@@ -4,6 +4,8 @@ WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
-RUN ./mvnw install
+RUN ./mvnw package
 
-CMD ["./mvnw", "spring-boot:run"]
+COPY target/backend-0.0.1-SNAPSHOT.jar /app
+
+CMD ["java", "-jar", "/app/backend-0.0.1-SNAPSHOT.jar"]
